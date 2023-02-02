@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <div id="earth" style="width: 100%; height: 100vh"></div>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/echarts-gl.min.js"></script>
+    <script>
+      var dom = document.getElementById("earth");
+      var myChart = echarts.init(dom);
+      var img = new Image();
+      img.src = "./img/weixing.png";
+      var option = {
+        backgroundColor: "#000",
+        globe: {
+          show: true,
+          globeRadius: 80,
+          baseTexture: "img/world.jpg",
+          heightTexture: "img/world.jpg",
+          displacementScale: 0.04,
+          environment: "img/starfield.jpg",
+          shading: "realistic",
+          realisticMaterial: {
+            roughness: 0.9,
+          },
+          viewControl: {
+            autoRotate: true,
+            autoRotateAfterStill: 3,
+            distance: 300,
+            maxDistance: 800,
+            damping: 0,
+          },
+          postEffect: {
+            enable: true,
+          },
+          light: {
+            main: {
+              intensity: 5,
+              shadow: true,
+            },
+            ambientCubemap: {
+              texture: "img/pisa.hdr",
+              diffuseIntensity: 0.2,
+            },
+          },
+        },
+        series: [
+          {
+            type: "scatter3D",
+            coordinateSystem: "globe",
+            data: [[12, 14, 10]],
+            symbolSize: 0,
+            label: {
+              show: true,
+              position: "top",
+              distance: -20,
+              formatter(params) {
+                return "卫星";
+              },
+
+              textStyle: {
+                color: "transparent",
+                padding: [15, 20],
+                backgroundColor: {
+                  image: "./img/weixing.png",
+                },
+              },
+            }
+          },
+          {
+            type: "scatter3D",
+            coordinateSystem: "globe",
+            data: [[12, 14, 10]],
+            symbolSize: 0,
+            label: {
+              show: true,
+              clickable: true,
+              position: "bottom",
+              distance: 0,
+              formatter(params) {
+                return "卫星";
+              },
+              textStyle: {
+                color: "yellow",
+                padding: [15, 20],
+                backgroundColor: "transparent",
+              },
+            },
+          }
+        ]
+      };
+      if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+        myChart.on("click", function (clickparams) {
+          //   console.log(clickparams);
+        });
+      }
+    </script>
+  </body>
+</html>
